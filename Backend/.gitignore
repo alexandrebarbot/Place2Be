@@ -1,4 +1,3 @@
-target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -44,8 +43,6 @@ lib/
 manifest.yml
 overridedb.*
 settings.xml
-target
-!target/place2be.war
 transaction-logs
 .flattened-pom.xml
 secrets.yml
