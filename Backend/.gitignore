@@ -45,6 +45,7 @@ manifest.yml
 overridedb.*
 settings.xml
 target
+!target/place2be.war
 transaction-logs
 .flattened-pom.xml
 secrets.yml
