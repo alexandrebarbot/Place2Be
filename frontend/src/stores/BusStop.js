@@ -17,14 +17,14 @@ class BusStopStore {
     getAll() {
         Request.getAllBusStop().then(busStops => {
             this.busStops = busStops;
-            this.launchListeners(busStops);
+            this.launchListeners();
         });
     }
 
     getFiltered(latitude, longitude, radius) {
-        Request.getFilteredBusStop(latitude, longitude, radius).then(bosStops => {
-            this.busStops = this.busStops;
-            this.launchListeners;
+        Request.getFilteredBusStop(latitude, longitude, radius).then(busStops => {
+            this.busStops = busStops;
+            this.launchListeners();
         })
     }
 

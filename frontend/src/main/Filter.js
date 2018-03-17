@@ -1,7 +1,8 @@
 import React from 'react';
-import {Collapsible, CollapsibleItem, Row, Col, Input} from 'react-materialize';
+import {Row, Col, Input} from 'react-materialize';
 
 import BusStopStore from '../stores/BusStop';
+import ParkingRelaisStore from '../stores/ParkingRelais';
  
 export default class Filter extends React.Component {
     constructor(pros) {
@@ -9,11 +10,17 @@ export default class Filter extends React.Component {
 
         this.state = {
             showBusStops: false,
+            showParkingrelais: false,
             distance: ''
         };
 
         this.onChangeBusStop = this.onChangeBusStop.bind(this);
         this.onChangeDistance = this.onChangeDistance.bind(this);
+        this.onChangeParkingRelais = this.onChangeParkingRelais.bind(this);
+    }
+
+    onChangeDistance(e) {
+        this.setState({distance: e.target.value});
     }
 
     showPosition(position) {
@@ -41,18 +48,32 @@ export default class Filter extends React.Component {
         });
     }
 
-    onChangeDistance(e) {
-        this.setState({distance: e.target.value});
-    }
-
     getBusStop() {
-        if(this.checkFieldUsability(this.props.selectedLatitude) && this.checkFieldUsability(this.props.selectedLongitude) && 
-            this.checkFieldUsability(this.state.distance)) {
-                BusStopStore.getFiltered(this.props.selectedLatitude, this.props.selectedLongitude, this.state.distance);
+        if(this.checkCanUseLocationFilters()) {
+            BusStopStore.getFiltered(this.props.selectedLatitude, this.props.selectedLongitude, this.state.distance);
         }
         else {
             BusStopStore.getAll();
         }
+    }
+
+    onChangeParkingRelais() {
+        let showParkingrelais = !this.state.showParkingrelais;
+
+        this.setState({showParkingrelais}, () => {
+            if(showParkingrelais) {
+                ParkingRelaisStore.getAll();
+            }
+            else {
+                ParkingRelaisStore.removeAll();
+            }
+        });
+    }
+
+    checkCanUseLocationFilters() {
+        return this.checkFieldUsability(this.props.selectedLatitude) && 
+            this.checkFieldUsability(this.props.selectedLongitude) && 
+            this.checkFieldUsability(this.state.distance);
     }
 
     checkFieldUsability(field) {
@@ -76,21 +97,11 @@ export default class Filter extends React.Component {
                 <Row>
                     <Input type="checkbox" label="Show bus stops" checked={this.state.showBusStops} onChange={this.onChangeBusStop} />
                 </Row>
+
+                <Row>
+                    <Input type="checkbox" label="Show parking relais" checked={this.state.showParkingrelais} onChange={this.onChangeParkingRelais} />
+                </Row>
             </React.Fragment>
         );
     }
 }
-
-//<Collapsible>
-//    <CollapsibleItem header='First' icon='filter_drama'>
-//        <p>p</p>
-//    </CollapsibleItem>
-//
-//    <CollapsibleItem header='Second' icon='place'>
-//        <p>p</p>
-//    </CollapsibleItem>
-//
-//    <CollapsibleItem header='Third' icon='whatshot'>
-//        <p>p</p>
-//    </CollapsibleItem>
-//</Collapsible>

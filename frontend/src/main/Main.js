@@ -5,6 +5,7 @@ import {Map, TileLayer} from 'react-leaflet';
 import Filter from './Filter';
 import Request from '../helper/Request';
 import BusStop from '../mapElements/BusStop';
+import ParkingRelais from '../mapElements/ParkingRelais';
 
 const position = [49.711622, 6.131935];
 
@@ -45,6 +46,7 @@ export default class Main extends React.Component {
                                 attribution='<a href="http://osm.org">OpenStreetMap</a>' />
 
                             <BusStop />
+                            <ParkingRelais />
                         </Map>
                     </Col>
                 </Row>

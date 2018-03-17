@@ -7,7 +7,13 @@ const Request = {
 
     getFilteredBusStop: (latitude, longitude, radius) => 
         fetch(baseUrl + `/bus_stop/around?latitude=${latitude}&longitude=${longitude}&radius=${radius}`)
-        .then(result => result.json())
+        .then(result => result.json()),
+
+    getAllParkingRelais: () => fetch(baseUrl + '/parking_relais/all').then(result => result.json()),
+
+    geAllPopulation: () => fetch(baseUrl + '/population/all').then(result => result.json()),
+
+    getAllRealEstatePrice: () => fetch(baseUrl + '/real_estate_pricer/all').then(result => result.json())
 };
 
 export default Request;
