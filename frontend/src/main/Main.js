@@ -1,8 +1,9 @@
 import React from 'react';
 import {Row, Col} from 'react-materialize';
-import {Map, TileLayer} from 'react-leaflet';
+import {Map, TileLayer, Marker} from 'react-leaflet';
 
 import Filter from './Filter';
+import {RedIcon} from '../helper/LeafletIcons';
 import Request from '../helper/Request';
 import BusStop from '../mapElements/BusStop';
 import ParkingRelais from '../mapElements/ParkingRelais';
@@ -22,6 +23,7 @@ export default class Main extends React.Component {
         };
 
         this.onMapClick = this.onMapClick.bind(this);
+        this.onResetMarkers = this.onResetMarkers.bind(this);
     }
 
     componentDidMount() {
@@ -35,12 +37,16 @@ export default class Main extends React.Component {
         });
     }
 
+    onResetMarkers() {
+        this.setState({selectedLatitude: null, selectedLongitude: null});
+    }
+
     render() {
         return (
             <main>
                 <Row>
                     <Col s={3}>
-                        <Filter />
+                        <Filter onResetMarkers={this.onResetMarkers} selectedLatitude={this.state.selectedLatitude} selectedLongitude={this.state.selectedLongitude} />
                     </Col>
                     <Col s={9}>
                         <Map center={position} zoom={10} style={{height: 800}} onClick={this.onMapClick}>
@@ -53,6 +59,10 @@ export default class Main extends React.Component {
                             <School />
                             <Population />
                             <RealEstatePrice />
+
+                            {this.state.selectedLatitude !== null && this.state.selectedLongitude !== null ? 
+                                <Marker position={[this.state.selectedLatitude, this.state.selectedLongitude]} icon={RedIcon} /> : ''
+                            }
                         </Map>
                     </Col>
                 </Row>
