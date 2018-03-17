@@ -22,7 +22,7 @@ public class ParkingRelaisController {
         this.parkingRelaisRepository = parkingRelaisRepository;
     }
 
-    @ApiOperation(value = "Get all parking relais", tags = "Parking Relais")
+    @ApiOperation(value = "Get all parking relais", tags = "parking Relais")
     @GetMapping(path = "/all")
     public ResponseEntity<List<ParkingRelais>> getAll() {
         return ResponseEntity.ok(parkingRelaisRepository.getAll());
