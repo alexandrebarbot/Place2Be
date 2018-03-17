@@ -3,10 +3,7 @@ package lu.adneom.place2be.bus_stop;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,12 @@ public class BusStopController {
     @GetMapping(path = "/all")
     public ResponseEntity<List<BusStop>> getAll() {
         return ResponseEntity.ok(busStopService.getAll());
+    }
+
+    @ApiOperation(value = "Get bus stop around he area", tags = "bus_stop")
+    @GetMapping(path = "/around")
+    public ResponseEntity<List<BusStop>> getAround(@RequestParam float longitude, @RequestParam float latitude) {
+        return ResponseEntity.ok(busStopService.getAround(latitude, longitude));
     }
 
 }

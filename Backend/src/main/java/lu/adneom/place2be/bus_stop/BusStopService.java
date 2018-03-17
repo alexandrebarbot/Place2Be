@@ -10,9 +10,7 @@ public class BusStopService {
 
     private BusStopRepository busStopRepository;
 
-    public BusStopService() {
-
-    }
+    public BusStopService() { }
 
     @Autowired
     public BusStopService(BusStopRepository busStopRepository) {
@@ -21,5 +19,10 @@ public class BusStopService {
 
     public List<BusStop> getAll() {
         return (List<BusStop>) busStopRepository.findAll();
+    }
+
+    public List<BusStop> getAround(float latitude, float longitude) {
+        return busStopRepository.findByLatitudeBetweenAndLongitudeBetween(latitude - 0.0500f,
+                latitude + 0.0500f, longitude - 0.0500f, longitude + 0.0500f);
     }
 }
