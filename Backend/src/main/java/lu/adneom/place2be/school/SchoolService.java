@@ -13,9 +13,7 @@ public class SchoolService {
 
     private SchoolRepository schoolRepository;
 
-    public SchoolService() {
-
-    }
+    public SchoolService() { }
 
     @Autowired
     public SchoolService(SchoolRepository schoolRepository) {

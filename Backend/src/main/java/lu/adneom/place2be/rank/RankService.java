@@ -2,6 +2,8 @@ package lu.adneom.place2be.rank;
 
 import lu.adneom.place2be.bus_stop.BusStop;
 import lu.adneom.place2be.bus_stop.BusStopService;
+import lu.adneom.place2be.parking_relais.ParkingRelais;
+import lu.adneom.place2be.parking_relais.ParkingRelaisService;
 import lu.adneom.place2be.school.School;
 import lu.adneom.place2be.school.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +18,26 @@ public class RankService {
 
     private SchoolService schoolService;
     private BusStopService busStopService;
+    private ParkingRelaisService parkingRelaisService;
 
     public RankService() {
 
     }
 
     @Autowired
-    public RankService(SchoolService schoolService, BusStopService busStopService) {
+    public RankService(SchoolService schoolService, BusStopService busStopService, ParkingRelaisService
+            parkingRelaisService) {
         this.schoolService = schoolService;
         this.busStopService = busStopService;
+        this.parkingRelaisService = parkingRelaisService;
     }
 
     public Rank calculate(float longitude, float latitude, float radius) {
         Rank rank = new Rank();
         rank.setSchools(getSchool(longitude, latitude, radius));
         rank.setBusStops(getBusStop(longitude, latitude, radius));
+        rank.setParkingRelais(getParkingRelais(longitude, latitude, radius));
+
         return rank;
     }
 
@@ -52,6 +59,16 @@ public class RankService {
                     .getLatitude(), busStop.getLongitude()));
         });
         return distanceBetweenLocationAndBusStop;
+    }
+
+    private Map<ParkingRelais, Double> getParkingRelais(float longitude, float latitude, float radius) {
+        List<ParkingRelais> parkingRelais = parkingRelaisService.getAround(longitude, latitude, radius);
+        Map<ParkingRelais, Double> distanceBetweenLocationAndParkingRelais = new HashMap<>();
+        parkingRelais.stream().forEach(parking -> {
+            distanceBetweenLocationAndParkingRelais.put(parking, distance(latitude, longitude, parking
+                    .getLatitude(), parking.getLongitude()));
+        });
+        return distanceBetweenLocationAndParkingRelais;
     }
 
     private static double distance(float lat1, float lon1, float lat2, float lon2) {
