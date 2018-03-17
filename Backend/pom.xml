@@ -5,8 +5,8 @@
 
   <groupId>lu.adneom</groupId>
   <artifactId>place2be</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
 
   <name>place2be</name>
   <description>Place2Be Backend API</description>

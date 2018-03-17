@@ -10,6 +10,10 @@ public class CityService {
 
     private CityRepository cityRepository;
 
+    public CityService() {
+
+    }
+
     @Autowired
     public CityService(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
