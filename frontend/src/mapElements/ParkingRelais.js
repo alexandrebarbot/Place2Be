@@ -1,6 +1,7 @@
 import React from 'react';
 import {Marker, Popup} from 'react-leaflet';
 
+import {YellowIcon} from '../helper/LeafletIcons';
 import ParkingRelaisStore from '../stores/ParkingRelais';
 
 export default class ParkingRelais extends React.Component {
@@ -17,7 +18,7 @@ export default class ParkingRelais extends React.Component {
     render() {
         return (
             this.state.parkingRelais.map((parkingRelais, index) => 
-                <Marker position={[parkingRelais.longitude, parkingRelais.latitude]} key={index}>
+                <Marker position={[parkingRelais.longitude, parkingRelais.latitude]} key={index} icon={YellowIcon}>
                     <Popup>
                         <span>
                             Localisation : {parkingRelais.localisation} <br />

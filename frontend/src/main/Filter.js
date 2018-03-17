@@ -1,107 +1,36 @@
 import React from 'react';
-import {Row, Col, Input} from 'react-materialize';
+import {Tabs, Tab} from 'react-materialize';
 
+import GlobalFilter from '../filters/GlobalFilters';
 import BusStopStore from '../stores/BusStop';
 import ParkingRelaisStore from '../stores/ParkingRelais';
- 
+import SchoolStore from '../stores/School';
+import PopulationStore from '../stores/Population';
+import RealEstatePrice from '../stores/RealEstatePrice';
+
 export default class Filter extends React.Component {
-    constructor(pros) {
-        super(pros);
+    constructor(props) {
+        super(props);
 
-        this.state = {
-            showBusStops: false,
-            showParkingrelais: false,
-            distance: ''
-        };
+        this.state = {};
 
-        this.onChangeBusStop = this.onChangeBusStop.bind(this);
-        this.onChangeDistance = this.onChangeDistance.bind(this);
-        this.onChangeParkingRelais = this.onChangeParkingRelais.bind(this);
+        this.onChangeTabs = this.onChangeTabs.bind(this);
     }
 
-    onChangeDistance(e) {
-        this.setState({distance: e.target.value});
-    }
-
-    showPosition(position) {
-        if(!this.checkFieldUsability(position)) {
-            return 'NULL';
-        }
-
-        if(typeof position === 'string') {
-            position = parseFloat(position);
-        }
-
-        return position.toFixed(3);
-    }
-
-    onChangeBusStop() {
-        let showBusStops = !this.state.showBusStops;
-
-        this.setState({showBusStops}, () => {
-            if(showBusStops) {
-                this.getBusStop();
-            }
-            else {
-                BusStopStore.removeAll();
-            }
-        });
-    }
-
-    getBusStop() {
-        if(this.checkCanUseLocationFilters()) {
-            BusStopStore.getFiltered(this.props.selectedLatitude, this.props.selectedLongitude, this.state.distance);
-        }
-        else {
-            BusStopStore.getAll();
-        }
-    }
-
-    onChangeParkingRelais() {
-        let showParkingrelais = !this.state.showParkingrelais;
-
-        this.setState({showParkingrelais}, () => {
-            if(showParkingrelais) {
-                ParkingRelaisStore.getAll();
-            }
-            else {
-                ParkingRelaisStore.removeAll();
-            }
-        });
-    }
-
-    checkCanUseLocationFilters() {
-        return this.checkFieldUsability(this.props.selectedLatitude) && 
-            this.checkFieldUsability(this.props.selectedLongitude) && 
-            this.checkFieldUsability(this.state.distance);
-    }
-
-    checkFieldUsability(field) {
-        return field !== undefined && field !== null && field !== false;
+    onChangeTabs(e) {
+        BusStopStore.removeAll();
+        ParkingRelaisStore.removeAll();
+        SchoolStore.removeAll();
+        PopulationStore.removeAll();
+        RealEstatePrice.removeAll();
     }
 
     render() {
         return (
-            <React.Fragment>
-                <Row>
-                    <Col s={6}>
-                        Selected position : <br />
-                        Latitude : {this.showPosition(this.props.selectedLatitude)} <br />
-                        Longitude : {this.showPosition(this.props.selectedLongitude)}
-                    </Col>
-                    <Col s={6}>
-                        <Input type="number" label="Distance" min="1" step="1" value={this.state.distance} onChange={this.onChangeDistance} />
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Input type="checkbox" label="Show bus stops" checked={this.state.showBusStops} onChange={this.onChangeBusStop} />
-                </Row>
-
-                <Row>
-                    <Input type="checkbox" label="Show parking relais" checked={this.state.showParkingrelais} onChange={this.onChangeParkingRelais} />
-                </Row>
-            </React.Fragment>
+            <Tabs className='tab-demo z-depth-1' onChange={this.onChangeTabs}>
+                <Tab title="Global view"><GlobalFilter /></Tab>
+                <Tab title="Filter view" active><p>1</p></Tab>
+            </Tabs>
         );
     }
 }
