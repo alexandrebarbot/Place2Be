@@ -27,8 +27,9 @@ public class BusStopController {
 
     @ApiOperation(value = "Get bus stop around he area", tags = "bus_stop")
     @GetMapping(path = "/around")
-    public ResponseEntity<List<BusStop>> getAround(@RequestParam float longitude, @RequestParam float latitude) {
-        return ResponseEntity.ok(busStopService.getAround(latitude, longitude));
+    public ResponseEntity<List<BusStop>> getAround(@RequestParam float longitude, @RequestParam float latitude,
+                                                   @RequestParam float radius) {
+        return ResponseEntity.ok(busStopService.getAround(latitude, longitude, radius));
     }
 
 }

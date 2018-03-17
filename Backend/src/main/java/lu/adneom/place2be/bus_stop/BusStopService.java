@@ -21,8 +21,8 @@ public class BusStopService {
         return (List<BusStop>) busStopRepository.findAll();
     }
 
-    public List<BusStop> getAround(float latitude, float longitude) {
-        return busStopRepository.findByLatitudeBetweenAndLongitudeBetween(latitude - 0.0500f,
-                latitude + 0.0500f, longitude - 0.0500f, longitude + 0.0500f);
+    public List<BusStop> getAround(float latitude, float longitude, float radius) {
+        return busStopRepository.findByLatitudeBetweenAndLongitudeBetween(latitude - radius,
+                latitude + radius, longitude - radius, longitude + radius);
     }
 }
