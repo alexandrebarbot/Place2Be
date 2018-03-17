@@ -5,14 +5,9 @@ import os.path, sys
 
 from openpyxl import load_workbook
 from geopy.geocoders import Nominatim
-import pymysql.cursors
 
 
-
-import pymysql.cursors
-
-# Connect to the database
-connection = pymysql.connect(host='159.89.4.245', user='collector', password='place2be', db='P2B', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+from _database import connection, insert_value, select_value
 
 geolocator = Nominatim()
 
@@ -55,35 +50,7 @@ def get_city_location(city):
 		return location.latitude, location.longitude
 	except:
 		print("City unknow, manual insert", city)
-		sys.exit()
-
-def insert_value(sql):
-	''' Insert Into dqtqbqse'''
-	try:
-	    with connection.cursor() as cursor:
-	        # Create a new record
-	        cursor.execute(sql)
-	        new_id = cursor.lastrowid
-
-	    # Commit to save the data
-	    connection.commit()
-
-	except:
-	    return False
-
-	return new_id
-
-def select_value(sql):
-	try:
-	    with connection.cursor() as cursor:
-	        # Read a single record
-	        cursor.execute(sql)
-	        result = cursor.fetchone()
-	except:
-	    return False
-
-	return result
-
+		#sys.exit()
 
 def parse_xlsx():
 	workbook = load_workbook(target_path)
@@ -97,7 +64,10 @@ def parse_xlsx():
 		pcity = select_value(sql)
 		# Check if the city already exist
 		if not pcity:
-			lat, lon = get_city_location(row[0].value)
+			try:
+				lat, lon = get_city_location(row[0].value)
+			except:
+				continue
 			print("CITY", city, "Lat", lat, 'Lon', lon)
 
 			# Insert City is does not exist

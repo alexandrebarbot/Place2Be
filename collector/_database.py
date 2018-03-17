@@ -1,7 +1,7 @@
 import pymysql.cursors
 
 # Connect to the database
-connection = pymysql.connect(host='IP', user='USERNAME', password='PASSWORD', db='P2B', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+connection = pymysql.connect(host='', user='', password='', db='P2B', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
 def insert_value(sql):
 	''' Insert Into dqtqbqse'''
@@ -25,6 +25,17 @@ def select_value(sql):
 	        # Read a single record
 	        cursor.execute(sql)
 	        result = cursor.fetchone()
+	except:
+	    return False
+
+	return result
+
+def select_values(sql):
+	try:
+	    with connection.cursor() as cursor:
+	        # Read a single record
+	        cursor.execute(sql)
+	        result = cursor.fetchall()
 	except:
 	    return False
 
