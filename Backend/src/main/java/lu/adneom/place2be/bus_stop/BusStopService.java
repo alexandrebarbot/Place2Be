@@ -25,10 +25,10 @@ public class BusStopService {
     }
 
     public List<BusStop> getAround(float latitude, float longitude, float radius) {
-        float latitudeMin = (float) (latitude - (180 / PI) * (radius / 6378137));
-        float latitudeMax = (float) (latitude + (180 / PI) * (radius / 6378137));
-        float longitudeMin = (float) (longitude - (180 / PI) * (radius / 6378137) / cos(latitude));
-        float longitudeMax = (float) (longitude + (180 / PI) * (radius / 6378137) / cos(latitude));
+        float latitudeMin = (float) (latitude - (radius / 6378137) * (180 / PI));
+        float latitudeMax = (float) (latitude + (radius / 6378137) * (180 / PI));
+        float longitudeMin = (float) (longitude - (radius / (6378137 * cos(PI * latitude / 180)) * (180 / PI)));
+        float longitudeMax = (float) (longitude + (radius / (6378137 * cos(PI * latitude / 180)) * (180 / PI)));
 
         return busStopRepository.findByLatitudeBetweenAndLongitudeBetween(latitudeMin,
                 latitudeMax, longitudeMin, longitudeMax);
