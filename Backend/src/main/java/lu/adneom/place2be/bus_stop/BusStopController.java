@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(name = "/bus_stop")
+@RequestMapping("/bus_stop")
 public class BusStopController {
 
     private BusStopService busStopService;
