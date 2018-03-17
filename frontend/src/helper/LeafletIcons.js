@@ -9,8 +9,6 @@ import YellowImg from '../img/marker-icon-yellow.png';
 import ShadowImg from '../img/marker-shadow.png';
 import L from 'leaflet';
 
-console.log(L);
-
 export const BlueIcon = new L.Icon({
 	iconUrl: BlueImg,
 	shadowUrl: ShadowImg,

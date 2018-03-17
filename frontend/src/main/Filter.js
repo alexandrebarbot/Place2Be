@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tabs, Tab} from 'react-materialize';
+import {Collapsible, CollapsibleItem} from 'react-materialize';
 
 import GlobalFilter from '../filters/GlobalFilters';
 import BusStopStore from '../stores/BusStop';
@@ -27,10 +27,14 @@ export default class Filter extends React.Component {
 
     render() {
         return (
-            <Tabs className='tab-demo z-depth-1' onChange={this.onChangeTabs}>
-                <Tab title="Global view"><GlobalFilter /></Tab>
-                <Tab title="Filter view" active><p>1</p></Tab>
-            </Tabs>
+            <Collapsible accordion onSelect={this.onChangeTabs}>
+                <CollapsibleItem header='General view' icon='filter_drama'>
+                    Lorem ipsum dolor sit amet.
+                </CollapsibleItem>
+                <CollapsibleItem header='Filter view' icon='place'>
+                    <GlobalFilter />
+                </CollapsibleItem>
+            </Collapsible>
         );
     }
 }
