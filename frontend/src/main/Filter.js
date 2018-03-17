@@ -33,7 +33,7 @@ export default class Filter extends React.Component {
 
         this.setState({showBusStops}, () => {
             if(showBusStops) {
-                BusStopStore.getAll();
+                this.getBusStop();
             }
             else {
                 BusStopStore.removeAll();
@@ -49,6 +49,9 @@ export default class Filter extends React.Component {
         if(this.checkFieldUsability(this.props.selectedLatitude) && this.checkFieldUsability(this.props.selectedLongitude) && 
             this.checkFieldUsability(this.state.distance)) {
                 BusStopStore.getFiltered(this.props.selectedLatitude, this.props.selectedLongitude, this.state.distance);
+        }
+        else {
+            BusStopStore.getAll();
         }
     }
 
