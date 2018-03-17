@@ -24,10 +24,10 @@ export default class RealEstatePrice extends React.Component {
                     <Popup>
                         <span>
                             City : {realEstatePrice.city.name} <br />
-                            Moyenne maison : {realEstatePrice.moy_price_house} <br />
-                            Moyenne maison m² : {realEstatePrice.moy_price_square_meter_house} <br />
-                            Moyenne appartement : {realEstatePrice.moy_price_flat} <br />
-                            Moyenne appartement m² : {realEstatePrice.moy_price_square_meter_flat} <br />
+                            Moyenne maison : {realEstatePrice.moy_price_house} € <br />
+                            Moyenne maison m² : {realEstatePrice.moy_price_square_meter_house} € <br />
+                            Moyenne appartement : {realEstatePrice.moy_price_flat} € <br />
+                            Moyenne appartement m² : {realEstatePrice.moy_price_square_meter_flat} € <br />
                             Latitude : {realEstatePrice.city.latitude} <br />
                             Longitude : {realEstatePrice.city.longitude}
                         </span>
