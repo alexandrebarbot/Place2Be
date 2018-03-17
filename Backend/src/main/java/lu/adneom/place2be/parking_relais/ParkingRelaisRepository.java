@@ -8,6 +8,5 @@ import java.util.List;
 @Repository
 public interface ParkingRelaisRepository extends CrudRepository<ParkingRelais, Long> {
     List<ParkingRelais> findByLongitudeBetweenAndLatitudeBetween(float longitudeMin, float longitudeMax, float
-            latitudeMin, float
-                                                                         latitudeMax);
+            latitudeMin, float latitudeMax);
 }

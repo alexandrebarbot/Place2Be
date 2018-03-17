@@ -42,7 +42,7 @@ public class RankService {
     }
 
     private Map<School, Double> getSchool(float longitude, float latitude, float radius) {
-        List<School> schools = schoolService.getInArea(longitude, latitude, radius);
+        List<School> schools = schoolService.getAround(longitude, latitude, radius);
         Map<School, Double> distanceBetweenLocationAndSchools = new HashMap<>();
         schools.stream().forEach(school -> {
             distanceBetweenLocationAndSchools.put(school, distance(latitude, longitude, school

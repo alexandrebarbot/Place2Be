@@ -3,10 +3,7 @@ package lu.adneom.place2be.school;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +25,10 @@ public class SchoolController {
         return ResponseEntity.ok(schoolService.getAll());
     }
 
+    @ApiOperation(value = "Get school around the area", tags = "school")
+    @GetMapping(path = "/around")
+    public ResponseEntity<List<School>> getAround(@RequestParam float longitude, @RequestParam float latitude,
+                                                  @RequestParam float radius) {
+        return ResponseEntity.ok(schoolService.getAround(latitude, longitude, radius));
+    }
 }

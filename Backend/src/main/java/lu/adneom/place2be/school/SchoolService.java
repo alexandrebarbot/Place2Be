@@ -24,7 +24,7 @@ public class SchoolService {
         return (List<School>) schoolRepository.findAll();
     }
 
-    public List<School> getInArea(float longitude, float latitude, float radius) {
+    public List<School> getAround(float longitude, float latitude, float radius) {
         radius *= 1000;
         float latitudeMin = (float) (latitude - (radius / 6378137) * (180 / PI));
         float latitudeMax = (float) (latitude + (radius / 6378137) * (180 / PI));

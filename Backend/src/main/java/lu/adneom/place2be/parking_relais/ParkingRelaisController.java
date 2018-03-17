@@ -3,10 +3,7 @@ package lu.adneom.place2be.parking_relais;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,17 +12,24 @@ import java.util.List;
 @RequestMapping("/parking_relais")
 public class ParkingRelaisController {
 
-    private ParkingRelaisService parkingRelaisRepository;
+    private ParkingRelaisService parkingRelaisService;
 
     @Autowired
-    public ParkingRelaisController(ParkingRelaisService parkingRelaisRepository) {
-        this.parkingRelaisRepository = parkingRelaisRepository;
+    public ParkingRelaisController(ParkingRelaisService parkingRelaisService) {
+        this.parkingRelaisService = parkingRelaisService;
     }
 
     @ApiOperation(value = "Get all parking relais", tags = "parking Relais")
     @GetMapping(path = "/all")
     public ResponseEntity<List<ParkingRelais>> getAll() {
-        return ResponseEntity.ok(parkingRelaisRepository.getAll());
+        return ResponseEntity.ok(parkingRelaisService.getAll());
+    }
+
+    @ApiOperation(value = "Get parking relais around the area", tags = "parking Relais")
+    @GetMapping(path = "/around")
+    public ResponseEntity<List<ParkingRelais>> getAround(@RequestParam float longitude, @RequestParam float latitude,
+                                                         @RequestParam float radius) {
+        return ResponseEntity.ok(parkingRelaisService.getAround(latitude, longitude, radius));
     }
 
 }
