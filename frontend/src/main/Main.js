@@ -5,6 +5,10 @@ import {Map, TileLayer} from 'react-leaflet';
 import Filter from './Filter';
 import Request from '../helper/Request';
 import BusStop from '../mapElements/BusStop';
+import ParkingRelais from '../mapElements/ParkingRelais';
+import School from '../mapElements/School';
+import Population from '../mapElements/Population';
+import RealEstatePrice from '../mapElements/RealEstatePrice';
 
 const position = [49.711622, 6.131935];
 
@@ -36,7 +40,7 @@ export default class Main extends React.Component {
             <main>
                 <Row>
                     <Col s={3}>
-                        <Filter selectedLatitude={this.state.selectedLatitude} selectedLongitude={this.state.selectedLongitude} />
+                        <Filter />
                     </Col>
                     <Col s={9}>
                         <Map center={position} zoom={10} style={{height: 800}} onClick={this.onMapClick}>
@@ -45,6 +49,10 @@ export default class Main extends React.Component {
                                 attribution='<a href="http://osm.org">OpenStreetMap</a>' />
 
                             <BusStop />
+                            <ParkingRelais />
+                            <School />
+                            <Population />
+                            <RealEstatePrice />
                         </Map>
                     </Col>
                 </Row>

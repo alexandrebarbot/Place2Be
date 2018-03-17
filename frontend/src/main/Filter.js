@@ -1,93 +1,40 @@
 import React from 'react';
-import {Collapsible, CollapsibleItem, Row, Col, Input} from 'react-materialize';
+import {Collapsible, CollapsibleItem} from 'react-materialize';
 
+import GlobalFilter from '../filters/GlobalFilters';
 import BusStopStore from '../stores/BusStop';
- 
+import ParkingRelaisStore from '../stores/ParkingRelais';
+import SchoolStore from '../stores/School';
+import PopulationStore from '../stores/Population';
+import RealEstatePrice from '../stores/RealEstatePrice';
+
 export default class Filter extends React.Component {
-    constructor(pros) {
-        super(pros);
+    constructor(props) {
+        super(props);
 
-        this.state = {
-            showBusStops: false,
-            distance: ''
-        };
+        this.state = {};
 
-        this.onChangeBusStop = this.onChangeBusStop.bind(this);
-        this.onChangeDistance = this.onChangeDistance.bind(this);
+        this.onChangeTabs = this.onChangeTabs.bind(this);
     }
 
-    showPosition(position) {
-        if(!this.checkFieldUsability(position)) {
-            return 'NULL';
-        }
-
-        if(typeof position === 'string') {
-            position = parseFloat(position);
-        }
-
-        return position.toFixed(3);
-    }
-
-    onChangeBusStop() {
-        let showBusStops = !this.state.showBusStops;
-
-        this.setState({showBusStops}, () => {
-            if(showBusStops) {
-                BusStopStore.getAll();
-            }
-            else {
-                BusStopStore.removeAll();
-            }
-        });
-    }
-
-    onChangeDistance(e) {
-        this.setState({distance: e.target.value});
-    }
-
-    getBusStop() {
-        if(this.checkFieldUsability(this.props.selectedLatitude) && this.checkFieldUsability(this.props.selectedLongitude) && 
-            this.checkFieldUsability(this.state.distance)) {
-                BusStopStore.getFiltered(this.props.selectedLatitude, this.props.selectedLongitude, this.state.distance);
-        }
-    }
-
-    checkFieldUsability(field) {
-        return field !== undefined && field !== null && field !== false;
+    onChangeTabs(e) {
+        BusStopStore.removeAll();
+        ParkingRelaisStore.removeAll();
+        SchoolStore.removeAll();
+        PopulationStore.removeAll();
+        RealEstatePrice.removeAll();
     }
 
     render() {
         return (
-            <React.Fragment>
-                <Row>
-                    <Col s={6}>
-                        Selected position : <br />
-                        Latitude : {this.showPosition(this.props.selectedLatitude)} <br />
-                        Longitude : {this.showPosition(this.props.selectedLongitude)}
-                    </Col>
-                    <Col s={6}>
-                        <Input type="number" label="Distance" min="1" step="1" value={this.state.distance} onChange={this.onChangeDistance} />
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Input type="checkbox" label="Show bus stops" checked={this.state.showBusStops} onChange={this.onChangeBusStop} />
-                </Row>
-            </React.Fragment>
+            <Collapsible accordion onSelect={this.onChangeTabs}>
+                <CollapsibleItem header='General view' icon='filter_drama'>
+                    Lorem ipsum dolor sit amet.
+                </CollapsibleItem>
+                <CollapsibleItem header='Filter view' icon='place'>
+                    <GlobalFilter />
+                </CollapsibleItem>
+            </Collapsible>
         );
     }
 }
-
-//<Collapsible>
-//    <CollapsibleItem header='First' icon='filter_drama'>
-//        <p>p</p>
-//    </CollapsibleItem>
-//
-//    <CollapsibleItem header='Second' icon='place'>
-//        <p>p</p>
-//    </CollapsibleItem>
-//
-//    <CollapsibleItem header='Third' icon='whatshot'>
-//        <p>p</p>
-//    </CollapsibleItem>
-//</Collapsible>
