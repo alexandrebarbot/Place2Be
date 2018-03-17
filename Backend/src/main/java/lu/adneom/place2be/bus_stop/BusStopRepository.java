@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface BusStopRepository extends CrudRepository<BusStop, Long> {
     List<BusStop> findByLatitudeBetweenAndLongitudeBetween(float latitudeMin, float latitudeMax, float longitudeMin,
-                                                           float logitudeMax);
+                                                           float longitudeMax);
 }
