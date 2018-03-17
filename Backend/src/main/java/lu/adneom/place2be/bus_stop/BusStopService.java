@@ -25,6 +25,7 @@ public class BusStopService {
     }
 
     public List<BusStop> getAround(float latitude, float longitude, float radius) {
+        radius *= 1000;
         float latitudeMin = (float) (latitude - (radius / 6378137) * (180 / PI));
         float latitudeMax = (float) (latitude + (radius / 6378137) * (180 / PI));
         float longitudeMin = (float) (longitude - (radius / (6378137 * cos(PI * latitude / 180)) * (180 / PI)));
